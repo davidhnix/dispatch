@@ -1,8 +1,10 @@
 package com.homedepot.dispatch.event.publisher;
 
-import com.homedepot.dispatch.job.Job;
+import com.homedepot.dispatch.job.BasicJob;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationContext;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,10 +13,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class JobPublisher {
 
-    @Autowired
-    ApplicationEventPublisher applicationEventPublisher;
+    ApplicationContext context;
+    private TaskScheduler taskscheduler;
 
-    public void publish(Job job) {
-        applicationEventPublisher.publishEvent(new JobCreatedEvent(job));
+    @Autowired
+    public JobPublisher(ApplicationContext context, TaskScheduler taskscheduler) {
+
+        this.context = context;
+        this.taskscheduler = taskscheduler;
     }
+
+    public void publish(BasicJob job) {
+        System.out.println("Job was created, starting dispatch");
+
+        taskscheduler.schedule(job, new CronTrigger(job.getCronExpression()));
+
+    }
+
 }

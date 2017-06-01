@@ -7,12 +7,14 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+//        classpath("com.h2database:h2:1.4.191")
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+//apply plugin: 'org.flywaydb.flyway:4.2.0'
 
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
@@ -25,5 +27,11 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-web')
+
+    compile("org.springframework.boot:spring-boot-starter-data-rest")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("com.h2database:h2")
+    compile "org.flywaydb:flyway-core:4.2.0"
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

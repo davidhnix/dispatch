@@ -5,34 +5,56 @@ import org.springframework.web.client.RestTemplate;
 /**
  * Created by dnl0rot on 5/19/17.
  */
-public class BasicJob implements Job {
+public class BasicJob implements Runnable {
 
-    String id;
-    JobSchedule jobSchedule;
+    String name;
+    private String cronExpression;
     private String target;
 
-    public BasicJob(String id, Long jobFrequency, String target) {
-        this.id = id;
-        this.jobSchedule = new BasicJobSchedule(jobFrequency);
+    public BasicJob(){
+
+    }
+
+    public BasicJob(String name, String cronExpression, String target) {
+        this.name = name;
+        this.cronExpression = cronExpression;
         this.target = target;
     }
 
 
-    @Override
     public String id() {
-        return id;
+        return name;
     }
 
     @Override
-    public JobSchedule schedule() {
-        return jobSchedule;
-    }
-
-    @Override
-    public void execute() throws Exception {
-
+    public void run() {
         new RestTemplate().getForEntity(target, String.class);
 
-        System.out.println("JOB EXCECUTED: " + id);
+        System.out.println("JOB EXCECUTED: " + name);
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
+
+    public String getCronExpression() {
+        return cronExpression;
+    }
+
+    public void setCronExpression(String cronExpression) {
+        this.cronExpression = cronExpression;
     }
 }

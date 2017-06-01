@@ -1,7 +1,7 @@
 package com.homedepot.dispatch.startup;
 
-import com.homedepot.dispatch.job.BasicJob;
 import com.homedepot.dispatch.event.publisher.JobPublisher;
+import com.homedepot.dispatch.job.BasicJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -21,6 +21,6 @@ public class JobFinder implements ApplicationListener<ApplicationReadyEvent> {
         System.out.println("finding jobs......");
 
         System.out.println("found new job! creating event");
-        publisher.publish(new BasicJob("1", 3000L, "http://localhost:8080/test"));
+        publisher.publish(new BasicJob("1", "0/2 * * * * *", "http://localhost:8080/test"));
     }
 }
