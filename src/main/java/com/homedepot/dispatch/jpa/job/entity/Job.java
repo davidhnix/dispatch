@@ -17,6 +17,15 @@ public class Job {
     String jobName;
     String cronExpression;
     String target;
+    String timezone;
+
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
+    }
 
     public String getCronExpression() {
         return cronExpression;
