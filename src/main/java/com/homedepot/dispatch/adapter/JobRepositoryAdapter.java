@@ -12,5 +12,5 @@ public interface JobRepositoryAdapter {
 
     List<BasicJob> allJobs();
 
-    BasicJob findJob(String name);
+    BasicJob find(String jobName);
 }

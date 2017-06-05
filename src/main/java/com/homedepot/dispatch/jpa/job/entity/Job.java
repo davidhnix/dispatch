@@ -3,6 +3,7 @@ package com.homedepot.dispatch.jpa.job.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by dnl0rot on 5/19/17.
@@ -18,6 +19,19 @@ public class Job {
     String cronExpression;
     String target;
     String timezone;
+    String dcNumber;
+
+    @OneToMany
+    @JoinColumn(name="JOB_ID")
+    List<RequestParameter> requestParameters;
+
+    public String getDcNumber() {
+        return dcNumber;
+    }
+
+    public void setDcNumber(String dcNumber) {
+        this.dcNumber = dcNumber;
+    }
 
     public String getTimezone() {
         return timezone;
@@ -57,5 +71,13 @@ public class Job {
 
     public void setJobId(Integer jobId) {
         this.jobId = jobId;
+    }
+
+    public List<RequestParameter> getRequestParameters() {
+        return requestParameters;
+    }
+
+    public void setRequestParameters(List<RequestParameter> requestParameters) {
+        this.requestParameters = requestParameters;
     }
 }

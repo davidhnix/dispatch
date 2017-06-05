@@ -3,6 +3,7 @@ package com.homedepot.dispatch.job;
 import com.homedepot.dispatch.jpa.job.entity.Job;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.annotation.Target;
 import java.util.TimeZone;
 
 /**
@@ -12,18 +13,20 @@ public class BasicJob implements Runnable {
 
     String name;
     private String cronExpression;
-    private String target;
+    private TargetUrl target;
     private TimeZone timezone;
+    private String dcNumber;
 
     public BasicJob(){
 
     }
 
-    public BasicJob(String name, String cronExpression, String target, TimeZone timezone) {
+    public BasicJob(String name, String cronExpression, TargetUrl target, TimeZone timezone, String dcNumber) {
         this.name = name;
         this.cronExpression = cronExpression;
         this.target = target;
         this.timezone = timezone;
+        this.dcNumber = dcNumber;
     }
 
 
@@ -33,7 +36,7 @@ public class BasicJob implements Runnable {
 
     @Override
     public void run() {
-        new RestTemplate().getForEntity(target, String.class);
+        new RestTemplate().getForEntity(target.getFullUrl(), String.class);
 
         System.out.println("JOB EXCECUTED: " + name);
     }
@@ -47,11 +50,11 @@ public class BasicJob implements Runnable {
         this.name = name;
     }
 
-    public String getTarget() {
+    public TargetUrl getTarget() {
         return target;
     }
 
-    public void setTarget(String target) {
+    public void setTarget(TargetUrl target) {
         this.target = target;
     }
 
@@ -69,6 +72,14 @@ public class BasicJob implements Runnable {
 
     public void setTimezone(TimeZone timezone) {
         this.timezone = timezone;
+    }
+
+    public String getDcNumber() {
+        return dcNumber;
+    }
+
+    public void setDcNumber(String dcNumber) {
+        this.dcNumber = dcNumber;
     }
 
     @Override

@@ -36,7 +36,7 @@ public class Synchronizer {
     public void decomissionRemovedJobs(){
 
         for (ActiveJob activeJob : activeJobs.all()) {
-            if(jobRepository.findJob(activeJob.getJob().getName()) == null) {
+            if(jobRepository.find(activeJob.getJob().getName()) == null) {
 
                 publisher.stop(activeJob.getJob().getName());
             }
